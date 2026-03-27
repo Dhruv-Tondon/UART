@@ -16,5 +16,5 @@ always_ff @(posedge clk or posedge rst) begin
 end
 
 endmodule
-`timescale 1ns/1ps
+
 
