@@ -40,9 +40,6 @@ always_comb begin
 
     case(state)
         IDLE: busy = 0;
-
-        START: if (!start_sampled) error = 1;
-
         DATA: if (data_sample) shift_en = 1;
 
         STOP: if (!stop_sampled) error = 1;
