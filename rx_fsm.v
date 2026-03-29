@@ -1,11 +1,13 @@
 module rx_ctrl (
     input logic clk, rst,logic rx_sync2,logic start,logic sample_tick,
 
-    output logic shift_en,logic error,successful_frame,logic busy
+    output logic shift_en,logic error,successful_frame,logic busy,enable,align
 );
 
 typedef enum logic [2:0] {IDLE, START,DATA,STOP,DONE} state_t;
 state_t state, next;
+enable = (state != IDLE);
+align  = (state == IDLE && start);
 
 logic [2:0] bit_count;
 
@@ -28,7 +30,7 @@ always_comb begin
             else next = IDLE;
             end
         DATA:if (sample_tick && bit_count == 7)
-             next = STOP;00
+             next = STOP;
         STOP:  if (sample_tick) begin
             if (rx_sync2 == 1) next = DONE;
             else next = IDLE;

@@ -1,21 +1,28 @@
-module data_sampler(input rx_en,clk,rst,rx_sync_2,
-output logic start_sampled,data_sample,stop_sampled);
+module data_sampler (
+    input  clk, rst,
+    input  rx_sync2,enable,align,        
 
-reg [3:0]rx_count;
+    output logic sample_tick
+);
 
-always_ff@(posedge clk or rst)begin
-if(rst or rx_count==4'b1111;begin
-     rx_count <= 0;
-     start_sampled
-     data_sample
-     stop_sampled
+logic [3:0] rx_count;
+
+always_ff @(posedge clk or posedge rst) begin
+    if (rst || align) begin
+        rx_count <= 0;
+        sample_tick <= 0;
+    end 
+    else if (rx_sync_2 && enable) begin
+        if (rx_count == 4'd15)
+            rx_count <= 0;
+        else
+            rx_count <= rx_count + 1;
+
+        sample_tick <= (rx_count == 4'd7);
+    end 
+    else begin
+        sample_tick <= 0;
+    end
 end
-end 
-else if (start) begin
-    for(int i=0; i<8 ;i++)begin
-        (count<8)
-
-
-
 
 endmodule
