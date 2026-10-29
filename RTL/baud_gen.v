@@ -15,7 +15,7 @@ module baud_generator #(
         if (rst)
         begin
         count <= 0;
-        tick  <= 0;
+        tick <= 0;
         end
         else
         begin

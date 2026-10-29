@@ -37,12 +37,7 @@ module uart_tx(
                 begin
                     tick_count <= 0;
 
-                    if (bit_count == 4'd9)
-                    begin
-                        // Transmission over
-                        tx <= 1;
-                        busy <= 0;
-                    end
+                    if (bit_count == 4'd9) {tx,busy}<=2'b10;
                     else
                     begin
                         shift_reg <= shift_reg >> 1;
